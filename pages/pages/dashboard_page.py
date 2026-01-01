@@ -1,38 +1,46 @@
+# Filename: pages/dashboard_page.py
+# Description: Page Object Model for Dashboard, using ElementFinder for robust locator strategy and error handling.
+
 from utils.element_finder import ElementFinder, build_locator_strategy
 
 class DashboardPage:
-    def __init__(self, driver):
+    def __init__(self, driver, timeout=10):
         self.driver = driver
-        self.finder = ElementFinder(driver)
+        self.finder = ElementFinder(driver, timeout=timeout)
 
-    def get_welcome_banner(self):
-        locators = build_locator_strategy({"aria_label": "Welcome Banner"})
-        return self.finder.find("Welcome Banner", "Dashboard", locators)
-
-    def get_install_hp_smart_app_btn(self):
-        locators = build_locator_strategy({
-            "aria_label": "Install HP Smart App",
-            "data_testid": "install-hp-smart-app-btn"
+    def assert_welcome_banner(self):
+        locator_dict = build_locator_strategy({
+            "locator_type": "aria-label",
+            "locator_value": "Welcome Banner"
         })
-        return self.finder.find("Install HP Smart App Button", "Dashboard", locators)
+        self.finder.assert_visible("Welcome Banner", locator_dict, page_context="Dashboard")
 
-    def get_download_now_link(self):
-        locators = build_locator_strategy({
-            "aria_label": "Download now",
-            "data_testid": "download-now-link"
+    def click_install_hp_smart_app(self):
+        locator_dict = build_locator_strategy({
+            "locator_type": "data-testid",
+            "locator_value": "install-hp-smart-app-btn"
         })
-        return self.finder.find("Download Now Link", "Dashboard", locators)
+        self.finder.click("Install HP Smart App Button", locator_dict, page_context="Dashboard")
 
-    def get_learn_more_link(self):
-        locators = build_locator_strategy({
-            "aria_label": "Learn more",
-            "data_testid": "learn-more-link"
+    def click_download_now(self):
+        locator_dict = build_locator_strategy({
+            "locator_type": "aria-label",
+            "locator_value": "Download Now"
         })
-        return self.finder.find("Learn More Link", "Dashboard", locators)
+        self.finder.click("Download Now Link", locator_dict, page_context="Dashboard")
 
-    def get_sustainability_card(self):
-        locators = build_locator_strategy({
-            "aria_label": "Sustainability card",
-            "data_testid": "sustainability-card"
+    def click_learn_more(self):
+        locator_dict = build_locator_strategy({
+            "locator_type": "aria-label",
+            "locator_value": "Learn More"
         })
-        return self.finder.find("Sustainability Card", "Dashboard", locators)
+        self.finder.click("Learn More Link", locator_dict, page_context="Dashboard")
+
+    def assert_sustainability_card(self):
+        locator_dict = build_locator_strategy({
+            "locator_type": "aria-label",
+            "locator_value": "Sustainability"
+        })
+        self.finder.assert_visible("Sustainability Card", locator_dict, page_context="Dashboard")
+
+    # Add additional methods for other critical elements as needed
